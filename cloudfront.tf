@@ -28,7 +28,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     cached_methods         = ["GET", "HEAD"]
     viewer_protocol_policy = "allow-all"
 
-    #cache_policy_id = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # Managed-CachingDisabled
+    cache_policy_id = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # Managed-CachingDisabled
     #origin_request_policy_id = "714055c8-34d7-44d0-9286-0019c2cf98b7" # CacheByHost
 
     lambda_function_association {
