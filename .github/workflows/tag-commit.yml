@@ -1,0 +1,59 @@
+name: Tag commit
+
+on:
+  push:
+
+jobs:
+  calculate-version:
+    name: Calculate Version
+    runs-on: ubuntu-latest
+    outputs:
+      semVer: ${{ steps.gitversion.outputs.fullSemVer }}
+      major: ${{ steps.gitversion.outputs.Major }}
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout code
+        with:
+          fetch-depth: 0
+
+      - uses: gittools/actions/gitversion/setup@v0.9.7
+        name: Install GitVersion
+        with:
+          versionSpec: '5.x'
+
+      - uses: gittools/actions/gitversion/execute@v0.9.7
+        name: Determine Version
+        id: gitversion
+        with:
+          useConfigFile: true
+          configFilePath: gitversion.yml
+
+  tag_semver:
+    name: Tag semver version
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    needs:
+      - calculate-version
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout code
+
+      - name: Create tag
+        run: |
+          git tag v${{ needs.calculate-version.outputs.semVer }}
+          git push origin v${{ needs.calculate-version.outputs.semVer }}
+  
+  tag_major:
+    name: Tag major version
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.ref == 'refs/heads/main'
+    needs:
+      - calculate-version
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout code
+
+      - name: Create tag
+        run: |
+          git tag v${{ needs.calculate-version.outputs.major }}
+          git push origin v${{ needs.calculate-version.outputs.major }} --force
