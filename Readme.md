@@ -3,13 +3,13 @@ Terraform module for creating an S3 bucket for hosting dynamic feature environme
 This would mean if we had a S3 folder structure looking like this.
 
 - v1-0-0
-  - index.html
+    - index.html
 - v1-0-1
-  - index.html
+    - index.html
 - v2-0-0
-  - index.html
+    - index.html
 - v2-0-1
-  - index.html
+    - index.html
 
 We would have the different versions of our app hosted on the following domains if we base it on the below example.
 
