@@ -1,0 +1,6 @@
+navigatorName: Terraform S3 Feature Env
+category: Terraform
+includeLink: true
+files:
+- file: Readme.md
+  prettyName: Readme
