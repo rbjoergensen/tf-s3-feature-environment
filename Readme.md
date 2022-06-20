@@ -19,7 +19,7 @@ We would have the different versions of our app hosted on the following domains 
 - v2-0-1.myapp.callofthevoid.dk
 
 ## Example
-``` hcl
+``` terraform
 terraform {
   required_providers {
     aws = {
